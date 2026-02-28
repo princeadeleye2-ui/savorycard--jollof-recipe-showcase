@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SavoryCard - Classic Nigerian Jollof Rice</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #f5a962 0%, #e8614f 50%, #d4623a 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      font-size: 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-content {
+      padding: 40px;
+    }
+
+    .recipe-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #2c2c2c;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .recipe-description {
+      font-size: 15px;
+      color: #666666;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .section {
+      margin-bottom: 28px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      cursor: pointer;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #d4623a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .toggle-btn {
+      background: linear-gradient(135deg, #f5a962 0%, #e8614f 100%);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .toggle-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(212, 98, 58, 0.3);
+    }
+
+    .toggle-btn:active {
+      transform: translateY(0);
+    }
+
+    .section-content {
+      max-height: 1000px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 1;
+    }
+
+    .section-content.hidden {
+      max-height: 0;
+      opacity: 0;
+      margin-bottom: 0;
+    }
+
+    .ingredients-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .ingredients-list li {
+      padding: 12px 0;
+      padding-left: 28px;
+      position: relative;
+      color: #444444;
+      font-size: 14px;
+      line-height: 1.6;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .ingredients-list li:last-child {
+      border-bottom: none;
+    }
+
+    .ingredients-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #f5a962;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .steps-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: step-counter;
+    }
+
+    .steps-list li {
+      padding: 16px 0;
+      padding-left: 40px;
+      position: relative;
+      color: #444444;
+      font-size: 14px;
+      line-height: 1.6;
+      border-bottom: 1px solid #f0f0f0;
+      counter-increment: step-counter;
+    }
+
+    .steps-list li:last-child {
+      border-bottom: none;
+    }
+
+    .steps-list li:before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 16px;
+      background: linear-gradient(135deg, #f5a962 0%, #e8614f 100%);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 32px 40px;
+      border-top: 1px solid #f0f0f0;
+      font-size: 12px;
+      color: #999999;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 12px;
+      }
+
+      .card-content {
+        padding: 24px;
+      }
+
+      .recipe-title {
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+
+      .recipe-description {
+        font-size: 14px;
+        margin-bottom: 24px;
+      }
+
+      .section {
+        margin-bottom: 20px;
+      }
+
+      .section-title {
+        font-size: 16px;
+      }
+
+      .toggle-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+      }
+
+      .card-image {
+        height: 220px;
+      }
+
+      .ingredients-list li,
+      .steps-list li {
+        font-size: 13px;
+      }
+
+      .footer {
+        padding: 20px 24px;
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80" alt="Classic Nigerian Jollof Rice" class="card-image">
+      
+      <div class="card-content">
+        <h1 class="recipe-title">Classic Nigerian Jollof Rice</h1>
+        <p class="recipe-description">A smoky, flavorful West African rice dish perfect for any occasion.</p>
+
+        <div class="section">
+          <div class="section-header">
+            <h2 class="section-title">Ingredients</h2>
+            <button class="toggle-btn" id="toggle-ingredients">Toggle</button>
+          </div>
+          <div class="section-content" id="ingredients-content">
+            <ul class="ingredients-list">
+              <li>2 cups long grain rice</li>
+              <li>3 fresh tomatoes</li>
+              <li>2 red bell peppers</li>
+              <li>1 onion</li>
+              <li>2 tbsp tomato paste</li>
+              <li>2 seasoning cubes</li>
+              <li>1 tsp thyme</li>
+              <li>1 tsp curry powder</li>
+              <li>Salt to taste</li>
+              <li>2 cups chicken stock</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <h2 class="section-title">Steps</h2>
+            <button class="toggle-btn" id="toggle-steps">Toggle</button>
+          </div>
+          <div class="section-content" id="steps-content">
+            <ol class="steps-list">
+              <li>Blend tomatoes, peppers, and onion.</li>
+              <li>Fry tomato paste in oil for 3 minutes.</li>
+              <li>Add blended mixture and cook for 10 minutes.</li>
+              <li>Add seasoning, thyme, curry, and salt.</li>
+              <li>Pour in chicken stock and bring to boil.</li>
+              <li>Add washed rice, stir, and cover.</li>
+              <li>Cook on low heat for 20–25 minutes.</li>
+              <li>Fluff and serve hot.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="footer">
+          SavoryCard © 2026 | Ready for Immediate Deployment
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ingredientsBtn = document.getElementById('toggle-ingredients');
+    const stepsBtn = document.getElementById('toggle-steps');
+    const ingredientsContent = document.getElementById('ingredients-content');
+    const stepsContent = document.getElementById('steps-content');
+
+    ingredientsBtn.addEventListener('click', () => {
+      ingredientsContent.classList.toggle('hidden');
+      ingredientsBtn.textContent = ingredientsContent.classList.contains('hidden') ? 'Show' : 'Hide';
+    });
+
+    stepsBtn.addEventListener('click', () => {
+      stepsContent.classList.toggle('hidden');
+      stepsBtn.textContent = stepsContent.classList.contains('hidden') ? 'Show' : 'Hide';
+    });
+  </script>
+</body>
+</html>
